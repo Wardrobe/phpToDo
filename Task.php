@@ -5,9 +5,22 @@
         function loadTasks(){
             
         }
+
         function createNewTask($text,$time){
             $this->tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
         }
+
+        function findExpired() {
+            $today = new DateTime();
+            foreach($this->tasks as $oneTask) {
+                if($oneTask->time < $today) {
+                    $oneTask-> expired = true;
+                }else { $oneTask-> expired = false;
+                }
+            }
+        }
+
+
     }
     abstract class Task{
         public $taskID;
