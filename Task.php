@@ -2,12 +2,29 @@
     class Tasks{
         static public $tasks=array();
          static public $changed;
+        // puni i task i subtask u nizove
         function loadTasks(){
-            
+            $sqltask = "select * from task";
+            $query_run = mysqli_query($sqltask);
+            if($query_run) {
+                while ($row = mysqli_fetch_assoc($query_run)) {
+                    $sqlSubTask = "select * from 'subtask' where TaskID =". $row['TaskID'];
+                        $subTaskRow = array();
+                    $query_run_subtask = mysqli_query($sqlSubTask);
+                    if($query_run_subtask) {
+                        while ($rowSubtask = mysqli_fetch_assoc($query_run_subtask)) {
+                            $subTaskRow[] = new SubTask($rowSubtask['SubTaskID'], $rowSubtask['TaskID'],
+                                $rowSubtask['SubTaskText'],$rowSubtask['SubTaskDateTime'], $rowSubtask['SubTaskDone'] );
+                        }
+                    }else { mysqli_error();}
+                    $this::tasks[] = new MainTask($row['TaskID'],$row['TaskText'], $row['TastDateTime'],
+                        $row['TaskDone'],$subTaskRow);
+                }
+            }else { mysqli_error();}
         }
 
         function createNewTask($text,$time){
-            $this->tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
+            $this::tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
         }
 
         function findExpired() {
@@ -19,7 +36,11 @@
                 }
             }
         }
-
+        function getTaskById($id){
+            foreach($this::tasks as $task){
+                if($task->taskID==$id) return $task;
+            }
+        }
 
     }
     abstract class Task{
