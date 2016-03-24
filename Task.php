@@ -1,7 +1,7 @@
 <?php
     class Tasks{
-        public $tasks=array();
-        public $changed;
+        static public $tasks=array();
+         static public $changed;
         function loadTasks(){
             
         }
