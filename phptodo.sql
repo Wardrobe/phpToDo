@@ -16,37 +16,37 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`phptodo` /*!40100 DEFAULT CHARACTER SET
 
 USE `phptodo`;
 
-/*Table structure for table `podstavka` */
+/*Table structure for table `subtask` */
 
-DROP TABLE IF EXISTS `podstavka`;
+DROP TABLE IF EXISTS `subtask`;
 
-CREATE TABLE `podstavka` (
-  `StavkaID` int(11) NOT NULL,
-  `PodstavkaID` int(11) NOT NULL,
-  `ImePodstavke` tinytext,
-  `TekstPodstavke` text,
-  `Vreme` datetime DEFAULT NULL,
-  `Obavljeno` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`StavkaID`,`PodstavkaID`),
-  CONSTRAINT `podstavka_ibfk_1` FOREIGN KEY (`StavkaID`) REFERENCES `stavka` (`StavkaID`) ON DELETE NO ACTION
+CREATE TABLE `subtask` (
+  `TaskID` int(11) NOT NULL,
+  `SubTaskID` int(11) NOT NULL,
+  `SubTaskName` tinytext,
+  `SubTaskText` text,
+  `SubTaskDateTime` datetime DEFAULT NULL,
+  `SubTaskDone` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`TaskID`,`SubTaskID`),
+  CONSTRAINT `subtask_ibfk_1` FOREIGN KEY (`TaskID`) REFERENCES `task` (`TaskID`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `podstavka` */
+/*Data for the table `subtask` */
 
-/*Table structure for table `stavka` */
+/*Table structure for table `task` */
 
-DROP TABLE IF EXISTS `stavka`;
+DROP TABLE IF EXISTS `task`;
 
-CREATE TABLE `stavka` (
-  `StavkaID` int(11) NOT NULL AUTO_INCREMENT,
-  `ImeStavke` tinytext,
-  `TekstStavke` text,
-  `Vreme` datetime DEFAULT NULL,
-  `Obavljeno` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`StavkaID`)
+CREATE TABLE `task` (
+  `TaskID` int(11) NOT NULL AUTO_INCREMENT,
+  `TaskName` tinytext,
+  `TaskText` text,
+  `TastDateTime` datetime DEFAULT NULL,
+  `TaskDone` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`TaskID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `stavka` */
+/*Data for the table `task` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

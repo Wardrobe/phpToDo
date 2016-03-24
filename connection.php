@@ -1,7 +1,7 @@
 <?php
 
-$connection = mysqli_connect('localhost','root', '' , 'phptodo');
-if($connection -> connect_error) {
+$conn = new mysqli('localhost','root', '' , 'phptodo');
+if($conn->connect_error) {
     die('Greska pri konekciji sa bazom');
 }
 
