@@ -4,6 +4,16 @@
         function loadTasks(){
             
         }
+        function findExpired() {
+            $today = new DateTime();
+            foreach($this->tasks as $oneTask) {
+                if($oneTask->time < $today) {
+                    $oneTask-> expired = true;
+                }else { $oneTask-> expired = false;
+                }
+            }
+        }
+
     }
     class Task{
         public $taskID;
