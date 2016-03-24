@@ -9,6 +9,7 @@
         public $text;
         public $time;
         public $subTasks;
+        public $expired;
         function __construct($taskID,$name,$text,$time)
         {
             $this->$taskID=$taskID;
@@ -23,6 +24,10 @@
             $sql="INSERT INTO Stavka VALUES (null,$this->name,$this->text,$this->date)";
             $result=$conn->query($sql);
             $conn->close();
+        }
+
+        function isExpired () {
+            
         }
 //        function selectFromDatabase(){
 //            include_once "connection.php";
