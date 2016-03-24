@@ -26,6 +26,7 @@ CREATE TABLE `podstavka` (
   `ImePodstavke` tinytext,
   `TekstPodstavke` text,
   `Vreme` datetime DEFAULT NULL,
+  `Obavljeno` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`StavkaID`,`PodstavkaID`),
   CONSTRAINT `podstavka_ibfk_1` FOREIGN KEY (`StavkaID`) REFERENCES `stavka` (`StavkaID`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -41,6 +42,7 @@ CREATE TABLE `stavka` (
   `ImeStavke` tinytext,
   `TekstStavke` text,
   `Vreme` datetime DEFAULT NULL,
+  `Obavljeno` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`StavkaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
