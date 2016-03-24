@@ -11,7 +11,11 @@
         public $text;
         public $time;
         public $subTasks;
+
         public $done;
+
+        public $expired;
+
         function __construct($taskID,$name,$text,$time)
         {
             $this->$taskID=$taskID;
@@ -27,9 +31,13 @@
             $result=$conn->query($sql);
             $conn->close();
         }
-        function createNewSubtask($name,$text,$time){
-            $subTasks[]=new SubTask($name,$text,$time);
+
+        function createNewSubtask($name,$text,$time)
+        {
+            $subTasks[] = new SubTask($name, $text, $time);
+
         }
+
 //        function selectFromDatabase(){
 //            include_once "connection.php";
 //            $sql="Select * from Stavka";
