@@ -23,7 +23,6 @@ DROP TABLE IF EXISTS `subtask`;
 CREATE TABLE `subtask` (
   `TaskID` int(11) NOT NULL,
   `SubTaskID` int(11) NOT NULL,
-  `SubTaskName` tinytext,
   `SubTaskText` text,
   `SubTaskDateTime` datetime DEFAULT NULL,
   `SubTaskDone` tinyint(1) DEFAULT '0',
@@ -39,7 +38,6 @@ DROP TABLE IF EXISTS `task`;
 
 CREATE TABLE `task` (
   `TaskID` int(11) NOT NULL AUTO_INCREMENT,
-  `TaskName` tinytext,
   `TaskText` text,
   `TastDateTime` datetime DEFAULT NULL,
   `TaskDone` tinyint(1) DEFAULT '0',
