@@ -1,70 +1,69 @@
 <?php
     class Tasks{
-        public $tasks;
+        public $tasks=array();
+        public $changed;
         function loadTasks(){
             
         }
+        function createNewTask($text,$time){
+            $this->tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
+        }
     }
-    class Task{
+    abstract class Task{
         public $taskID;
-        public $name;
         public $text;
         public $time;
-        public $subTasks;
-
         public $done;
-
         public $expired;
 
-        function __construct($taskID,$name,$text,$time)
+        function __construct($taskID,$text,$time,$done)
         {
             $this->$taskID=$taskID;
-            $this->name=$name;
             $this->text=$text;
             $this->time=$time;
-            $this->subTasks=array();
+            $this->done=$done;
         }
 
-        function importIntoDatabase(){
+        abstract function createNewTaskInDatabase();
+    }
+
+
+
+    class MainTask extends Task{
+        public $subTasks=array();
+        function __construct($taskID,$text,$time,$done,$subTasks)
+        {
+           super($taskID,$text,$time,$done);
+            $this->subTasks=$subTasks;
+        }
+        function createNewSubtask($text,$time)
+        {
+            $this->subTasks[] = new SubTask($this->subTasks.count(),$this->taskID, $text, $time,false);
+
+        }
+        function createNewTaskInDatabase(){
             include_once "connection.php.php";
-            $sql="INSERT INTO Task VALUES (null,$this->name,$this->text,$this->date)";
+            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             $result=$conn->query($sql);
             $conn->close();
         }
 
-        function createNewSubtask($name,$text,$time)
+    }
+
+
+    class SubTask extends Task{
+        public $subTaskID;
+        function __construct($subTaskID,$taskID,$text,$time,$done)
         {
-            $subTasks[] = new SubTask($name, $text, $time);
+            super($taskID,$text,$time,$done);
+            $this->$subTaskID=$subTaskID;
 
         }
-
-//        function selectFromDatabase(){
-//            include_once "connection.php";
-//            $sql="Select * from Stavka";
-//            $result=$conn->query($sql);
-//            if ($result->num_rows > 0) {
-//                while($row = $result->fetch_assoc()) {
-//                   $this->taskID=row['StavkaID'];
-//                    $this->name=row['ImeStavke'];
-//                    $this->text=row['TekstStavke'];
-//                    $this->time=row['Vreme'];
-//                }
-//            } else {
-//                echo "0 results";
-//            }
-//            $conn->close();
-//        }
-    }
-    class SubTask{
-        public $subTaskID;
-        public $taskID;
-        public $name;
-        public $text;
-        public $time;
-        public $done;
-        function __construct($subTaskID,$taskID,$name,$text,$time)
-        {
-
+        function createNewTaskInDatabase(){
+            include_once "connection.php.php";
+            $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
+            $result=$conn->query($sql);
+            $conn->close();
         }
     }
 ?>
