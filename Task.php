@@ -1,7 +1,9 @@
 <?php
     class Tasks{
-
-
+        public $tasks;
+        function loadTasks(){
+            
+        }
     }
     class Task{
         public $taskID;
@@ -9,20 +11,24 @@
         public $text;
         public $time;
         public $subTasks;
+        public $done;
         function __construct($taskID,$name,$text,$time)
         {
             $this->$taskID=$taskID;
             $this->name=$name;
             $this->text=$text;
             $this->time=$time;
-            $this->importIntoDatabase();
+            $this->subTasks=array();
         }
 
         function importIntoDatabase(){
             include_once "connection.php.php";
-            $sql="INSERT INTO Stavka VALUES (null,$this->name,$this->text,$this->date)";
+            $sql="INSERT INTO Task VALUES (null,$this->name,$this->text,$this->date)";
             $result=$conn->query($sql);
             $conn->close();
+        }
+        function createNewSubtask($name,$text,$time){
+            $subTasks[]=new SubTask($name,$text,$time);
         }
 //        function selectFromDatabase(){
 //            include_once "connection.php";
@@ -40,5 +46,17 @@
 //            }
 //            $conn->close();
 //        }
+    }
+    class SubTask{
+        public $subTaskID;
+        public $taskID;
+        public $name;
+        public $text;
+        public $time;
+        public $done;
+        function __construct($subTaskID,$taskID,$name,$text,$time)
+        {
+
+        }
     }
 ?>
