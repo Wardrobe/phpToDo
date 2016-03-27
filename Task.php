@@ -25,6 +25,7 @@
 
         function createNewTask($text,$time){
             $this::tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
+            $this::$changed=true;
         }
 
         function findExpired() {
