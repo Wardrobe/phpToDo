@@ -1,4 +1,5 @@
 <?php
+
     class Tasks{
         static public $tasks=array();
          static public $changed;
@@ -15,10 +16,14 @@
         }
 
     function loadTasks(){
-            $_SESSION['edited'] == false;
+            if(isset($_SESSION['edited']) && $_SESSION['edited'] == false) {
+                return;
+            }
+            $_SESSION['edited'] = false;
             self::$changed=false;
+        include_once 'connection.php';
             $sqltask = "select * from task";
-            $query_run = mysqli_query($sqltask);
+            $query_run = mysqli_query($conn,$sqltask);
             if($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
                     $sqlSubTask = "select * from 'subtask' where TaskID =". $row['TaskID'];
