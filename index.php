@@ -1,6 +1,6 @@
 <?php
         session_start();
-        $_SESSION['expired'] == false;
+        $_SESSION['edited'] == false;
         include_once 'Task.php';
         include_once 'FormCommunication.php';
         include_once 'connection.php';
