@@ -3,7 +3,20 @@
         static public $tasks=array();
          static public $changed;
         // puni i task i subtask u nizove
-        function loadTasks(){
+//        function loadChanged(){
+//            if(isset($_SESSION['changed'])){
+//                $changed=$_SESSION['changed'];
+//            }
+//        }
+        function __construct()
+        {
+            if(!isset($_SESSION['edited']) or $_SESSION['edited']==true)
+                $this->loadTasks();
+        }
+
+    function loadTasks(){
+            $_SESSION['edited'] == false;
+            self::$changed=false;
             $sqltask = "select * from task";
             $query_run = mysqli_query($sqltask);
             if($query_run) {
@@ -17,14 +30,14 @@
                                 $rowSubtask['SubTaskText'],$rowSubtask['SubTaskDateTime'], $rowSubtask['SubTaskDone'] );
                         }
                     }else { mysqli_error();}
-                    $this::tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
+                    self::$tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
                         $row['TaskDone'],$subTaskRow);
                 }
             }else { mysqli_error();}
         }
 
         function createNewTask($text,$time){
-            $this::tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
+            self::$tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
             $this::$changed=true;
         }
 
@@ -74,11 +87,12 @@
         function createNewSubtask($text,$time)
         {
             $this->subTasks[] = new SubTask($this->subTasks.count(),$this->taskID, $text, $time,false);
+            Tasks::$changed=true;
 
         }
         function createNewTaskInDatabase(){
             include_once "connection.php.php";
-9            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
+            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             $result=$conn->query($sql);
             $conn->close();
         }
