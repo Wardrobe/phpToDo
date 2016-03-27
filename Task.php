@@ -17,7 +17,7 @@
                                 $rowSubtask['SubTaskText'],$rowSubtask['SubTaskDateTime'], $rowSubtask['SubTaskDone'] );
                         }
                     }else { mysqli_error();}
-                    $this::tasks[] = new MainTask($row['TaskID'],$row['TaskText'], $row['TastDateTime'],
+                    $this::tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
                         $row['TaskDone'],$subTaskRow);
                 }
             }else { mysqli_error();}
