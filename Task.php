@@ -60,7 +60,13 @@
                 if($task->taskID==$id) return $task;
             }
         }
-
+        public function allTasksToHTML(){
+            $toHTML="";
+            foreach(self::$tasks as $oneMainTask){
+                $toHTML=$toHTML.$oneMainTask->taskToHTML();
+            }
+            return $toHTML;
+        }
     }
     abstract class Task{
         public $taskID;
@@ -101,6 +107,21 @@
             $result=$conn->query($sql);
             $conn->close();
         }
+        function taskToHTML(){ //mora da predje u toString 99%
+            $toHTML="<div class=\"task\"><h4>.$this->taskID.</h4>";
+            if($this->expired == true and ($this->done == false)) {
+                $toHTML=$toHTML.'<input type="checkbox" onclick="return false"';
+            } if($this->done == true){
+                $toHTML=$toHTML.'<input type="checkbox" checked onclick="return false"';//moze js kao isteklo je
+            } else {
+                $toHTML=$toHTML.'<input type="checkbox" onclick="expiration.js">';
+            }
+            $toHTML=$toHTML.'<h4>'.$this->text.'</h4>'.'<h4>'.$this->time.'</h4><div id="subtasks">';
+            foreach($this->subTasks as $oneSubtask){
+                $toHTML=$toHTML.$oneSubtask->subtaskToHTML();
+            }
+            return $toHTML."</div></div>";
+        }
 
     }
 
@@ -118,6 +139,18 @@
             $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
             $result=$conn->query($sql);
             $conn->close();
+        }
+        function subtaskToHTML(){
+            $subtaskHTML='<h4>'.$this->taskID.'</h4>';
+            if($this->expired == true and ($this->done == false)) {
+                $subtaskHTML=$subtaskHTML.'<input type="checkbox" onclick="return false"';
+            } if($this->done == true){
+                $subtaskHTML=$subtaskHTML.'<input type="checkbox" checked onclick="return false"';//moze js kao isteklo je
+            } else {
+                $subtaskHTML=$subtaskHTML.'<input type="checkbox" onclick="expiration.js">';
+            }
+            $subtaskHTML=$subtaskHTML.'<h4>'.$this->text.'</h4>'.'<h4>'.$this->time.'</h4><br>';
+            return $subtaskHTML;
         }
     }
 ?>
