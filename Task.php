@@ -2,7 +2,7 @@
 
     class Tasks{
         static public $tasks=array();
-         static public $changed;
+        static public $changed;
         // puni i task i subtask u nizove
 //        function loadChanged(){
 //            if(isset($_SESSION['changed'])){
@@ -30,7 +30,6 @@
             if($query_run) {
                 while ($row = $query_run->fetch_assoc()) {
                     $sqlSubTask = "select * from subtask where TaskID =". $row['TaskID'];
-                    var_dump($sqlSubTask);
                         $subTaskRow = array();
                     $query_run_subtask = $conn->query($sqlSubTask);
                     if($query_run_subtask) {
@@ -50,9 +49,11 @@
 
         }
 
-        function createNewTask($text,$time){
-            self::$tasks[]=new MainTask($this->tasks.count(),$text,$time,false,null);
-            $this::$changed=true;
+        static function createNewTask($text,$time){
+
+            self::$tasks[]= new MainTask(self::tasks.count(),$text,$time,false,null);
+
+            self::$changed=true;
         }
 
         function findExpired() {
