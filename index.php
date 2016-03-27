@@ -1,5 +1,13 @@
 <?php
         session_start();
+        $_SESSION['expired'] == false;
+        include_once 'Task.php';
+        include_once 'FormCommunication.php';
+        include_once 'connection.php';
+        if($_SESSION['expired'] == true) {
+            $tasks1 = new Tasks();
+            $tasks1->loadTasks();
+        }
 ?>
 <!DOCTYPE html>
     <html>
