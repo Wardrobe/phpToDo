@@ -77,7 +77,7 @@
         }
         function createNewTaskInDatabase(){
             include_once "connection.php.php";
-            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
+9            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             $result=$conn->query($sql);
             $conn->close();
         }
