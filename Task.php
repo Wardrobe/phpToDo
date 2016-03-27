@@ -96,7 +96,7 @@
 
         }
         function createNewTaskInDatabase(){
-            include_once "connection.php.php";
+            include_once "connection.php";
             $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             $result=$conn->query($sql);
             $conn->close();
@@ -114,7 +114,7 @@
 
         }
         function createNewTaskInDatabase(){
-            include_once "connection.php.php";
+            include_once "connection.php";
             $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
             $result=$conn->query($sql);
             $conn->close();
