@@ -1,5 +1,5 @@
 <?php
-
+        session_start();
 ?>
 <!DOCTYPE html>
     <html>
@@ -50,14 +50,14 @@
          $sub3->name = "SUB3";
          $sub3->time = "timeee";
 
-         $tsk1 = new Task();
+         $tsk1 = new MainTask();
          $tsk1->taskID = 1;
          $tsk1->expired = false;
          $tsk1->name = "TSK1";
          $tsk1->time = "timetsk1";
          $tsk1->subtasks = array($sub1, $sub2, $sub3);
 
-         $tsk2 = new Task();
+         $tsk2 = new MainTask();
          $tsk2->taskID = 2;
          $tsk2->expired = false;
          $tsk2->name = "TSK2";
