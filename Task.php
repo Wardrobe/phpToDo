@@ -17,7 +17,7 @@
                                 $rowSubtask['SubTaskText'],$rowSubtask['SubTaskDateTime'], $rowSubtask['SubTaskDone'] );
                         }
                     }else { mysqli_error();}
-                    $this::tasks[] = new MainTask($row['TaskID'],$row['TaskText'], $row['TastDateTime'],
+                    $this::tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
                         $row['TaskDone'],$subTaskRow);
                 }
             }else { mysqli_error();}
@@ -78,7 +78,7 @@
         }
         function createNewTaskInDatabase(){
             include_once "connection.php.php";
-            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
+9            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             $result=$conn->query($sql);
             $conn->close();
         }
