@@ -21,26 +21,35 @@
             }
             $_SESSION['edited'] = false;
             self::$changed=false;
-        include_once 'connection.php';
+            include_once 'connection.php';
+            global $conn;
             $sqltask = "select * from task";
-             global $conn;
-            $query_run = mysqli_query($conn,$sqltask);
+
+            $query_run = $conn->query($sqltask);
+
             if($query_run) {
-                while ($row = mysqli_fetch_assoc($query_run)) {
-                    $sqlSubTask = "select * from 'subtask' where TaskID =". $row['TaskID'];
+                while ($row = $query_run->fetch_assoc()) {
+                    $sqlSubTask = "select * from subtask where TaskID =". $row['TaskID'];
+                    var_dump($sqlSubTask);
                         $subTaskRow = array();
-                    $query_run_subtask = mysqli_query($sqlSubTask);
+                    $query_run_subtask = $conn->query($sqlSubTask);
                     if($query_run_subtask) {
-                        while ($rowSubtask = mysqli_fetch_assoc($query_run_subtask)) {
+
+                        while ($rowSubtask = $query_run_subtask->fetch_assoc()) {
                             $subTaskRow[] = new SubTask($rowSubtask['SubTaskID'], $rowSubtask['TaskID'],
                                 $rowSubtask['SubTaskText'],$rowSubtask['SubTaskDateTime'], $rowSubtask['SubTaskDone'] );
                         }
-                    }else { mysqli_error();}
-                    self::$tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
+                    }
+//                    else { mysqli_error();}
+                    var_dump($subTaskRow);
+                    var_dump($row['TaskText']);
+                    self::$tasks[] = new MainTask($row['TaskID'],$row['TaskText'], $row['TaskDateTime'],
                         $row['TaskDone'],$subTaskRow);
                 }
             }
-//else { mysqli_error();}
+
+//            else { mysqli_error();}
+
         }
 
         function createNewTask($text,$time){
@@ -94,7 +103,7 @@
         public $subTasks=array();
         function __construct($taskID,$text,$time,$done,$subTasks)
         {
-           super($taskID,$text,$time,$done);
+           parent::_construct($taskID,$text,$time,$done);
             $this->subTasks=$subTasks;
         }
         function createNewSubtask($text,$time)
@@ -104,7 +113,8 @@
 
         }
         function createNewTaskInDatabase(){
-            include_once "connection.php";
+            include_once 'connection.php';
+            global $conn;
             $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
             global $conn;
 
@@ -134,12 +144,13 @@
         public $subTaskID;
         function __construct($subTaskID,$taskID,$text,$time,$done)
         {
-            super($taskID,$text,$time,$done);
+            parent::__construct($taskID,$text,$time,$done);
             $this->$subTaskID=$subTaskID;
 
         }
         function createNewTaskInDatabase(){
-            include_once "connection.php";
+            include_once 'connection.php';
+            global $conn;
             $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
             global $conn;
 

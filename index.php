@@ -5,7 +5,7 @@
         include_once 'FormCommunication.php';
         include_once 'connection.php';
         $tasks1 = new Tasks();
-        $tasks1->loadTasks();
+
 ?>
 <!DOCTYPE html>
     <html>
@@ -35,7 +35,9 @@
             <br>
          <?php include 'taskForm.php';?>
          <?php include 'subtaskForm.php';?>
+
           <?php var_dump($tasks1::$tasks) ?>
+
 <!--         --><?php
 ////         include('Task.php');
 ////         include('subtasksTest.php');
