@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v10.00 Beta1
-MySQL - 5.7.9 : Database - phptodo
+MySQL - 5.6.17 : Database - phptodo
 *********************************************************************
 */
 
@@ -42,9 +42,11 @@ CREATE TABLE `task` (
   `TastDateTime` datetime DEFAULT NULL,
   `TaskDone` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`TaskID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `task` */
+
+insert  into `task`(`TaskID`,`TaskText`,`TastDateTime`,`TaskDone`) values (1,'Nesto','2016-03-23 00:00:00',0),(5,'Task2','2016-03-08 00:00:00',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

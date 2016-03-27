@@ -23,6 +23,7 @@
             self::$changed=false;
         include_once 'connection.php';
             $sqltask = "select * from task";
+             global $conn;
             $query_run = mysqli_query($conn,$sqltask);
             if($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
@@ -38,7 +39,8 @@
                     self::$tasks[] = new MainTask($row['taskID'],$row['text'], $row['time'],
                         $row['TaskDone'],$subTaskRow);
                 }
-            }else { mysqli_error();}
+            }
+//else { mysqli_error();}
         }
 
         function createNewTask($text,$time){
@@ -104,6 +106,8 @@
         function createNewTaskInDatabase(){
             include_once "connection.php";
             $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
+            global $conn;
+
             $result=$conn->query($sql);
             $conn->close();
         }
@@ -137,6 +141,8 @@
         function createNewTaskInDatabase(){
             include_once "connection.php";
             $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
+            global $conn;
+
             $result=$conn->query($sql);
             $conn->close();
         }
