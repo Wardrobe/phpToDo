@@ -37,7 +37,7 @@
          <?php include 'subtaskForm.php';?>
 
           <?php var_dump($tasks1::$tasks) ?>
-
+    <?=$tasks1->allTasksToHTML()?>
 <!--         --><?php
 ////         include('Task.php');
 ////         include('subtasksTest.php');

@@ -16,10 +16,10 @@
         }
 
     function loadTasks(){
-            if(isset($_SESSION['edited']) && $_SESSION['edited'] == false) {
-                return;
-            }
-            $_SESSION['edited'] = false;
+//            if(isset($_SESSION['edited']) && $_SESSION['edited'] == false) {
+//                return;
+//            }
+//            $_SESSION['edited'] = false;
             self::$changed=false;
             include_once 'connection.php';
             global $conn;
@@ -41,8 +41,6 @@
                         }
                     }
 //                    else { mysqli_error();}
-                    var_dump($subTaskRow);
-                    var_dump($row['TaskText']);
                     self::$tasks[] = new MainTask($row['TaskID'],$row['TaskText'], $row['TaskDateTime'],
                         $row['TaskDone'],$subTaskRow);
                 }
@@ -79,7 +77,7 @@
             return $toHTML;
         }
     }
-    abstract class Task{
+     abstract class Task{
         public $taskID;
         public $text;
         public $time;
@@ -88,7 +86,7 @@
 
         function __construct($taskID,$text,$time,$done)
         {
-            $this->$taskID=$taskID;
+            $this->taskID=$taskID;
             $this->text=$text;
             $this->time=$time;
             $this->done=$done;
@@ -103,7 +101,7 @@
         public $subTasks=array();
         function __construct($taskID,$text,$time,$done,$subTasks)
         {
-           parent::_construct($taskID,$text,$time,$done);
+            parent::__construct($taskID,$text,$time,$done);
             $this->subTasks=$subTasks;
         }
         function createNewSubtask($text,$time)
@@ -122,7 +120,7 @@
             $conn->close();
         }
         function taskToHTML(){ //mora da predje u toString 99%
-            $toHTML="<div class=\"task\"><h4>.$this->taskID.</h4>";
+            $toHTML="<div class=\"task\"><h4>$this->taskID.</h4>";
             if($this->expired == true and ($this->done == false)) {
                 $toHTML=$toHTML.'<input type="checkbox" onclick="return false"';
             } if($this->done == true){
@@ -145,7 +143,7 @@
         function __construct($subTaskID,$taskID,$text,$time,$done)
         {
             parent::__construct($taskID,$text,$time,$done);
-            $this->$subTaskID=$subTaskID;
+            $this->subTaskID=$subTaskID;
 
         }
         function createNewTaskInDatabase(){
