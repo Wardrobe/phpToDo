@@ -1,4 +1,5 @@
 <?php
+    include 'SubtaskFormObject.php';
 
     class Tasks{
         static public $tasks=array();
@@ -133,7 +134,7 @@
             foreach($this->subTasks as $oneSubtask){
                 $toHTML=$toHTML.$oneSubtask->subtaskToHTML();
             }
-            return $toHTML."</div></div>";
+            return $toHTML.new SubtaskFormObject($this->taskID,$this->time)."</div></div>";
         }
 
     }
