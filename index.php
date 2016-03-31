@@ -4,6 +4,7 @@
         include_once 'Task.php';
         include_once 'FormCommunication.php';
         include_once 'connection.php';
+        //include 'SubtaskFormObject.php';
         $tasks1 = new Tasks();
 
 ?>
@@ -14,6 +15,7 @@
         <meta charset="UTF-8">
         <meta name="author" content="Trajko,Filip,Otas,Dule legenda">
         <meta name="description" content="To do list / Lista stvari za uraditi">
+        <link rel="stylesheet" type="text/css" href="mycss.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
@@ -27,17 +29,19 @@
                     }
                 });
             });
+
+            $(document).ready(function(){
+                $('.show_hide').click(function(){
+                    $(this).next('#slidingDiv').slideToggle();
+                    return false;
+                });
+            });
         </script>
     </head>
     <body>
 
-         <input type="checkbox" checked onclick="return false">
-            <br>
-         <?php include 'taskForm.php';?>
-         <?php include 'subtaskForm.php';?>
-
-          <?php var_dump($tasks1::$tasks) ?>
     <?=$tasks1->allTasksToHTML()?>
+    <?=include 'taskForm.php'; ?>
 <!--         --><?php
 ////         include('Task.php');
 ////         include('subtasksTest.php');
