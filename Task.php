@@ -13,6 +13,7 @@
         {
             if(!isset($_SESSION['edited']) or $_SESSION['edited']==true)
                 $this->loadTasks();
+                $this->findExpired();
         }
 
     function loadTasks(){
@@ -58,11 +59,13 @@
 
         function findExpired() {
             $today = new DateTime();
-            foreach($this->tasks as $oneTask) {
+            foreach(self::$tasks as $oneTask) {
                 if($oneTask->time < $today) {
                     $oneTask-> expired = true;
                 }else { $oneTask-> expired = false;
+
                 }
+
             }
         }
         function getTaskById($id){
