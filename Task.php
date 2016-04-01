@@ -53,7 +53,7 @@
 
         static function createNewTask($text,$time){
 
-            self::$tasks[]= new MainTask(self::tasks.count(),$text,$time,false,null);
+            self::$tasks[]= new MainTask(count(self::$tasks),$text,$time,false,null);
 
             self::$changed=true;
         }
@@ -111,7 +111,7 @@
         }
         function createNewSubtask($text,$time)
         {
-            $this->subTasks[] = new SubTask($this->subTasks.count(),$this->taskID, $text, $time,false);
+            $this->subTasks[] = new SubTask(count($this->subTasks),$this->taskID, $text, $time,false);
             Tasks::$changed=true;
 
         }
@@ -124,6 +124,7 @@
             $result=$conn->query($sql);
             $conn->close();
         }
+
         function taskToHTML(){ //mora da predje u toString 99%
             $toHTML="<div class=\"task\"><h4>$this->taskID.</h4>";
             if($this->expired == true and ($this->done == false)) {
@@ -131,13 +132,14 @@
             } if($this->done == true){
                 $toHTML=$toHTML.'<input type="checkbox" checked onclick="return false"';//moze js kao isteklo je
             } else {
-                $toHTML=$toHTML.'<input type="checkbox" onclick="expiration.js">';
+                $toHTML=$toHTML.'<input type="checkbox" onclick="return false">';
             }
             $toHTML=$toHTML.'<h4>'.$this->text.'</h4>'.'<h4>'.$this->time.'</h4><div id="subtasks">';
             foreach($this->subTasks as $oneSubtask){
                 $toHTML=$toHTML.$oneSubtask->subtaskToHTML();
             }
-            return $toHTML.new SubtaskFormObject($this->taskID,$this->time)."</div></div>";
+            $z=explode(" ",$this->time);
+            return $toHTML.new SubtaskFormObject($this->taskID,$z[0]."T".$z[1])."</div></div>";
         }
 
     }

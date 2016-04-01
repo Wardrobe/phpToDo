@@ -22,13 +22,26 @@
                 $('#datefromparent').click(function() {
                     // alert($(this).prop('checked'));
                     if ($(this).is(':checked') == true) {
-                        $('#datesubtask').val("2017-03-23T00:00:50");
+                        $('#datesubtask').val(document.getElementById("parent_date").value);
                         $('#datesubtask').prop('disabled', true);
                     }else{
                         $('#datesubtask').prop('disabled', false);
                     }
                 });
             });
+            function setAsParent(par1,par2){
+                $(document).ready(function(){
+                    $("#par1").click(function() {
+                        // alert($(this).prop('checked'));
+                        if ($(this).is(':checked') == true) {
+                            $("#par2").val(document.getElementById("parent_date").value);
+                            $("#par2").prop('disabled', true);
+                        }else{
+                            $('#datesubtask').prop('disabled', false);
+                        }
+                    });
+                });
+            }
 
             $(document).ready(function(){
                 $('.show_hide').click(function(){

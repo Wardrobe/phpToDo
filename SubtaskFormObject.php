@@ -21,13 +21,13 @@ class SubtaskFormObject
             $a="<button type='button' class='show_hide'>+</button>
             <form name=\"subtaskForm\" action=".$_SERVER['PHP_SELF']." method=\"post\" id='slidingDiv'>
                     Subtask:<br>
-                    <input type=\"text\" name=\"task\" id=\"ab\" required>
+                    <input type=\"text\" name=\"task\" id=\"\" required>
                     <br>
                     Date:<br>
-                    <input type=\"hidden\" name=\"country\" value=".$this->taskParentID.">
-                    <input type=\"hidden\" name=\"country\" value=".$this->taskParentDate.">
+                    <input type=\"hidden\" name=\"taskID\" value=".$this->taskParentID.">
+                    <input type=\"hidden\" name=\"datefromparent\" value=".$this->taskParentDate." id=\"parent_date\">
                     <input type=\"datetime-local\" name=\"date\" min=".$c." id=\"datesubtask\"> or
-                    <input type=\"checkbox\" id=\"datefromparent\" required>Same as parent</input>
+                    <input type=\"checkbox\" id=\"datefromparent\" >Same as parent</input>
                     <br>
                     <input type=\"submit\" name=\"submit_subtask\" value=\"Save\">
                     <br>
