@@ -58,7 +58,7 @@
             self::$changed=true;
         }
 
-        function findExpired() {
+        static function findExpired() {
             $today = new DateTime();
             foreach(self::$tasks as $oneTask) {
                 if($oneTask->time < $today) {
@@ -69,8 +69,8 @@
 
             }
         }
-        function getTaskById($id){
-            foreach($this::tasks as $task){
+        static function getTaskById($id){
+            foreach(self::$tasks as $task){
                 if($task->taskID==$id) return $task;
             }
         }
