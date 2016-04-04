@@ -21,7 +21,7 @@
         <link rel="stylesheet" type="text/css" href="mycss.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
-            $(document).ready(function(){
+            /*$(document).ready(function(){
                 $('#datefromparent').click(function() {
                     // alert($(this).prop('checked'));
                     if ($(this).is(':checked') == true) {
@@ -31,19 +31,20 @@
                         $('#datesubtask').prop('disabled', false);
                     }
                 });
-            });
-            function setAsParent(par1,par2){
-                $(document).ready(function(){
-                    $("#par1").click(function() {
+            });*/
+
+            function setAsParent(par1,par2,par3){
+
+
+                    $(par1).click(function() {
                         // alert($(this).prop('checked'));
                         if ($(this).is(':checked') == true) {
-                            $("#par2").val(document.getElementById("parent_date").value);
-                            $("#par2").prop('disabled', true);
+                            $(par2).val(document.getElementById(par3).value);
+                            $(par2).prop('disabled', true);
                         }else{
-                            $('#datesubtask').prop('disabled', false);
+                            $(par2).prop('disabled', false);
                         }
                     });
-                });
             }
 
             $(document).ready(function(){
