@@ -54,7 +54,7 @@
         static function createNewTask($text,$time){
             $mainTask = new MainTask(null,$text,$time,false,null);
             self::$tasks[]= $mainTask;
-//            $mainTask->createNewTaskInDatabase();
+            $mainTask->createNewTaskInDatabase();
             self::$changed=true;
 
         }
@@ -122,9 +122,13 @@
             include_once 'connection.php';
             global $conn;
             $Date = date('Y-m-d H:i:s', strtotime($this->time . ":00"));
-            $sql="INSERT INTO Task VALUES (NULL ,'$this->text','$Date',0";
-
-            $conn->query($sql);
+            $sql="INSERT INTO Task VALUES (NULL ,'$this->text','$Date',0)";
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+//            $conn->query($sql);
             $conn->close();
         }
 
