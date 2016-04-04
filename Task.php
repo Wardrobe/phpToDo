@@ -124,7 +124,7 @@
             $Date = date('Y-m-d H:i:s', strtotime($this->time . ":00"));
             $sql="INSERT INTO Task VALUES (NULL ,'$this->text','$Date',0)";
             if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
+                
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
