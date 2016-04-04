@@ -1,11 +1,14 @@
 <?php
         session_start();
-
+       
         include_once 'Task.php';
+         $tasks1 = new Tasks();
+         $_SESSION['tasks'] = serialize($tasks1);
         include_once 'FormCommunication.php';
         include_once 'connection.php';
         //include 'SubtaskFormObject.php';
-        $tasks1 = new Tasks();
+       
+       
 
 ?>
 <!DOCTYPE html>

@@ -69,7 +69,7 @@
 
             }
         }
-        static function getTaskById($id){
+        function getTaskById($id){
             foreach(self::$tasks as $task){
                 if($task->taskID==$id) return $task;
             }
@@ -111,8 +111,10 @@
         }
         function createNewSubtask($text,$time)
         {
-            $this->subTasks[] = new SubTask(count($this->subTasks),$this->taskID, $text, $time,false);
+            $subtask=new SubTask(count($this->subTasks),$this->taskID, $text, $time,false);
+            $this->subTasks[] = $subtask;
             Tasks::$changed=true;
+            return $subtask;
 
         }
         function createNewTaskInDatabase(){
@@ -156,7 +158,7 @@
         function createNewTaskInDatabase(){
             include_once 'connection.php';
             global $conn;
-            $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskId,$this->text,$this->date,$this->done)";
+            $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskID,$this->text,$this->time,$this->done)";
             global $conn;
 
             $result=$conn->query($sql);

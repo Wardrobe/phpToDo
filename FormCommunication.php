@@ -16,9 +16,10 @@
         $formText = $_POST['task'];
         $formTime = $_POST['date'];
         $formTaskID = $_POST['taskID'];
-        $task = Tasks::getTaskByID($formTaskID);
-        $task->createNewSubTask($formText,$formTime);
-
+        $tasks = unserialize($_SESSION['tasks']);
+        $task = $tasks->getTaskByID($formTaskID);
+        $subtask=$task->createNewSubTask($formText,$formTime);
+        $subtask->createNewTaskInDatabase();
         // ovo dalje je u eksperimentalnoj fazi
 
         $_SESSION["edited"] = true;
