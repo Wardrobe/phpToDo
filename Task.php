@@ -52,10 +52,11 @@
         }
 
         static function createNewTask($text,$time){
-
-            self::$tasks[]= new MainTask(count(self::$tasks),$text,$time,false,null);
-
+            $mainTask = new MainTask(null,$text,$time,false,null);
+            self::$tasks[]= $mainTask;
+//            $mainTask->createNewTaskInDatabase();
             self::$changed=true;
+
         }
 
         static function findExpired() {
@@ -120,10 +121,10 @@
         function createNewTaskInDatabase(){
             include_once 'connection.php';
             global $conn;
-            $sql="INSERT INTO Task VALUES ($this->taskID,$this->text,$this->date,$this->done";
-            global $conn;
+            $Date = date('Y-m-d H:i:s', strtotime($this->time . ":00"));
+            $sql="INSERT INTO Task VALUES (NULL ,'$this->text','$Date',0";
 
-            $result=$conn->query($sql);
+            $conn->query($sql);
             $conn->close();
         }
 
@@ -158,8 +159,8 @@
         function createNewTaskInDatabase(){
             include_once 'connection.php';
             global $conn;
-            $sql="INSERT INTO SubTask VALUES ($this->taskID,$this->subTaskID,$this->text,$this->time,$this->done)";
-            global $conn;
+            $sql="INSERT INTO SubTask VALUES ('$this->taskID', NULL ,'$this->text','$this->time',0)";
+
 
             $result=$conn->query($sql);
             $conn->close();
