@@ -5,8 +5,8 @@
     if(isset($_POST['submit_task'])) {
         $formText = $_POST['task'];
         $formTime = $_POST['date'];
-        
-        Tasks::createNewTask($formText,$formTime);
+        $Date = date('Y-m-d H:i:s', strtotime($formTime . ":00"));
+        Tasks::createNewTask($formText,$Date);
 
         // ovo dalje je u eksperimentalnoj fazi
 
@@ -25,8 +25,8 @@
         $formTaskID = $_POST['taskID'];
         $tasks = unserialize($_SESSION['tasks']);
         $task = $tasks->getTaskByID($formTaskID);
-        $subtask=$task->createNewSubTask($formText,$Date);
-        $subtask->createNewTaskInDatabase();
+        $task->createNewSubTask($formText,$Date);
+
         // ovo dalje je u eksperimentalnoj fazi
 
 

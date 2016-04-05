@@ -52,7 +52,7 @@
         }
 
         static function createNewTask($text,$time){
-            $mainTask = new MainTask(null,$text,$time,false,null);
+            $mainTask = new MainTask(count(self::$tasks),$text,$time,false,array());
             self::$tasks[]= $mainTask;
             $mainTask->createNewTaskInDatabase();
             self::$changed=true;
@@ -96,6 +96,7 @@
             $this->text=$text;
             $this->time=$time;
             $this->done=$done;
+            $this->expired=false;
         }
 
         abstract function createNewTaskInDatabase();
@@ -113,9 +114,10 @@
         function createNewSubtask($text,$time)
         {
             $subtask=new SubTask(count($this->subTasks),$this->taskID, $text, $time,false);
+            $subtask->createNewTaskInDatabase();
             $this->subTasks[] = $subtask;
             Tasks::$changed=true;
-            return $subtask;
+
 
         }
         function createNewTaskInDatabase(){
@@ -139,12 +141,12 @@
             } if($this->done == true){
                 $toHTML=$toHTML.'<input type="checkbox" checked onclick="return false"';//moze js kao isteklo je
             } else {
-                $toHTML=$toHTML.'<input type="checkbox" onclick="return false">';
+                $toHTML=$toHTML."<input type='checkbox' onclick='checkOnPost($this->taskID)'>";
             }
             $toHTML=$toHTML.'<h4>'.$this->text.'</h4>'.'<h4>'.$this->time.'</h4><div id="subtasks">';
-            foreach($this->subTasks as $oneSubtask){
-                $toHTML=$toHTML.$oneSubtask->subtaskToHTML();
-            }
+                foreach ($this->subTasks as $oneSubtask) {
+                    $toHTML = $toHTML . $oneSubtask->subtaskToHTML();
+                }
             $z=explode(" ",$this->time);
             return $toHTML.new SubtaskFormObject($this->taskID,$z[0]."T".$z[1])."</div></div>";
         }
@@ -170,13 +172,13 @@
             $conn->close();
         }
         function subtaskToHTML(){
-            $subtaskHTML='<h4>'.$this->taskID.'</h4>';
+              $subtaskHTML='<h4>'.$this->subTaskID.'</h4>';
             if($this->expired == true and ($this->done == false)) {
                 $subtaskHTML=$subtaskHTML.'<input type="checkbox" onclick="return false"';
             } if($this->done == true){
                 $subtaskHTML=$subtaskHTML.'<input type="checkbox" checked onclick="return false"';//moze js kao isteklo je
             } else {
-                $subtaskHTML=$subtaskHTML.'<input type="checkbox" onclick="expiration.js">';
+                $subtaskHTML=$subtaskHTML."<input type='checkbox' onclick='checkOnPost($this->subTaskID)'>";
             }
             $subtaskHTML=$subtaskHTML.'<h4>'.$this->text.'</h4>'.'<h4>'.$this->time.'</h4><br>';
             return $subtaskHTML;
