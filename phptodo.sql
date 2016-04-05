@@ -22,15 +22,18 @@ DROP TABLE IF EXISTS `subtask`;
 
 CREATE TABLE `subtask` (
   `TaskID` int(11) NOT NULL,
-  `SubTaskID` int(11) NOT NULL,
+  `SubTaskID` int(11) NOT NULL AUTO_INCREMENT,
   `SubTaskText` text,
   `SubTaskDateTime` datetime DEFAULT NULL,
   `SubTaskDone` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`TaskID`,`SubTaskID`),
+  KEY `SubTaskID` (`SubTaskID`),
   CONSTRAINT `subtask_ibfk_1` FOREIGN KEY (`TaskID`) REFERENCES `task` (`TaskID`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `subtask` */
+
+insert  into `subtask`(`TaskID`,`SubTaskID`,`SubTaskText`,`SubTaskDateTime`,`SubTaskDone`) values (1,1,'Otas','2016-03-31 21:49:49',0);
 
 /*Table structure for table `task` */
 
